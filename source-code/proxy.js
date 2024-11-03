@@ -114,8 +114,12 @@ process.stdin.on('data', (data) => {
   } else if (input === 'close') {
     saveBlockedSites();
     process.exit();
-  } else {
+  } else if (input.startsWith('http://') || input.startsWith('https://')) {
     blockedSites.add(input);
     console.log(`${input} blocked successfully!`);
+  } else {
+    const formattedUrl = `http://${input}`;
+    blockedSites.add(formattedUrl);
+    console.log(`${formattedUrl} blocked successfully!`);
   }
 });
